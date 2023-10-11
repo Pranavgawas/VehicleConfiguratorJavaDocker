@@ -1,10 +1,11 @@
 version: '3.8'
 
 services:
-  app:
+  frontend: 
+    image: pranavgawas/projectfrontend-v1:1.0.0
+
+  backend:
     image: pranavgawas/vehicleconfiguratorapp:1.0.0
-    ports:
-      - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL="jdbc:mysql://db:3306/project?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false"
       - SPRING_DATASOURCE_USERNAME=admin

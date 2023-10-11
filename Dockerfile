@@ -3,6 +3,9 @@ FROM node:alpine3.16
 WORKDIR /myapp
 COPY ./VehicleFrontend/package.json /myapp/
 RUN npm install
+RUN npm install @mui/material @mui/icons-material
+RUN npm i react-router-dom
+RUN npm install react-bootstrap bootstrap
 COPY ./VehicleFrontend /myapp/
 RUN npm run build
 CMD [ "npm", "start" ]

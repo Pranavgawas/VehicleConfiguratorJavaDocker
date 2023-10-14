@@ -3,22 +3,37 @@ version: '3.8'
 services:
   frontend: 
     image: pranavgawas/projectfrontend-v1:1.0.0
+    ports:
+      - 3000:3000
+    networks:
+      - myapp
 
   backend:
-    image: pranavgawas/vehicleconfiguratorapp:1.0.0
+    build: .
     environment:
-      - SPRING_DATASOURCE_URL="jdbc:mysql://db:3306/project?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false"
-      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mydb:3306/project?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+      - spring.jpa.hibernate.ddl-auto=update
     depends_on:
       - mydb
+    ports:
+      - 8080:8080
+    networks:
+      - myapp
 
   mydb:
-    image: mysql:8.0.27
+    image: pranavgawas/mysql:2.0.0
     environment:
-      - DATABASE_HOST=docker-mysql
-      - DATABASE_PORT=3306
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mydb
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=root
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - myapp
+
+networks:
+  myapp:

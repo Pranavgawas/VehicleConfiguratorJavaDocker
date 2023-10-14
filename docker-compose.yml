@@ -7,18 +7,16 @@ services:
   backend:
     image: pranavgawas/vehicleconfiguratorapp:1.0.0
     environment:
-      - SPRING_DATASOURCE_URL="jdbc:mysql://db:3306/project?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false"
+      - SPRING_DATASOURCE_URL="jdbc:mysql://mydb:3306/project?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false"
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       - mydb
 
   mydb:
-    image: mysql:8.0.27
+    image: mysql
     environment:
-      - DATABASE_HOST=docker-mysql
-      - DATABASE_PORT=3306
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=mydb
       - MYSQL_USER=admin
-      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    volume:
+      - ./data:var/lib/mysql

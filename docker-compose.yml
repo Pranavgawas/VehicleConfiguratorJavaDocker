@@ -28,8 +28,8 @@ services:
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
-    # volumes:
-    #   - ./workspaces/VehicleConfiguratorJavaDocker/data:var/lib/mysql
+    volumes:
+      - ./data:/var/lib/mysql
     ports:
       - 3306:3306
     networks:
